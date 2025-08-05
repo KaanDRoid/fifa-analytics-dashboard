@@ -1,46 +1,47 @@
 # FIFA Analytics Dashboard Sample Data
 
-Bu klasör FIFA oyuncu verilerini içerir. Gerçek veri dosyaları boyut nedeniyle GitHub'a dahil edilmemiştir.
+This folder contains FIFA player data. Actual data files are not included in GitHub due to size constraints.
 
-## Gerekli Veri Dosyaları
+## Required Data Files
 
-Projenin çalışması için aşağıdaki CSV dosyalarına ihtiyaç vardır:
+The following CSV files are needed for the project to function:
 
-- `male_players.csv` - Erkek oyuncu istatistikleri
-- `female_players.csv` - Kadın oyuncu istatistikleri
-- `male_teams.csv` - Erkek takım bilgileri (opsiyonel)
-- `female_teams.csv` - Kadın takım bilgileri (opsiyonel)
-- `male_coaches.csv` - Erkek antrenör bilgileri (opsiyonel)
-- `female_coaches.csv` - Kadın antrenör bilgileri (opsiyonel)
+- `male_players.csv` - Male player statistics
+- `female_players.csv` - Female player statistics
+- `male_teams.csv` - Male team information (optional)
+- `female_teams.csv` - Female team information (optional)
+- `male_coaches.csv` - Male coach information (optional)
+- `female_coaches.csv` - Female coach information (optional)
 
-## Veri Formatı
+## Data Format
 
-CSV dosyaları aşağıdaki sütunları içermelidir:
+CSV files should contain the following columns:
 
-### Zorunlu Sütunlar
-- `player_id`: Benzersiz oyuncu kimliği
-- `long_name`: Oyuncu adı
-- `overall`: Genel rating (0-100)
-- `potential`: Potansiyel (0-100)
-- `value_eur`: Piyasa değeri (Euro)
-- `age`: Yaş
-- `pace`, `shooting`, `passing`, `dribbling`, `defending`, `physic`: Beceri ratings
-- `club_name`: Mevcut kulüp
-- `player_positions`: Oynadığı pozisyonlar
-- `nationality_name`: Uyruk
-- `league_name`: Mevcut lig
+### Required Columns
+- `player_id`: Unique player identifier
+- `long_name`: Player name
+- `overall`: Overall rating (0-100)
+- `potential`: Potential rating (0-100)
+- `value_eur`: Market value (Euro)
+- `age`: Age
+- `pace`, `shooting`, `passing`, `dribbling`, `defending`, `physic`: Skill ratings
+- `club_name`: Current club
+- `player_positions`: Playing positions
+- `nationality_name`: Nationality
+- `league_name`: Current league
 
-### Opsiyonel Sütunlar
-- `wage_eur`: Maaş
-- `height_cm`: Boy
-- `weight_kg`: Kilo
-- `preferred_foot`: Tercih edilen ayak
-- `weak_foot`: Zayıf ayak rating
-- `skill_moves`: Beceri hamlesi rating
+### Optional Columns
+- `wage_eur`: Wage
+- `height_cm`: Height
+- `weight_kg`: Weight
+- `preferred_foot`: Preferred foot
+- `weak_foot`: Weak foot rating
+- `skill_moves`: Skill moves rating
 
-## Veri Kaynağı
+## Data Sources
 
-Veri dosyalarını aşağıdaki kaynaklardan edinebilirsiniz:
-- EA Sports FIFA veritabanları
-- Kaggle FIFA datasets
-- SoFIFA.com
+You can obtain data files from the following sources:
+- [FIFA 23 Complete Player Dataset](https://www.kaggle.com/datasets/stefanoleone992/fifa-23-complete-player-dataset) - Kaggle (Primary source used)
+- EA Sports FIFA databases
+- Other Kaggle FIFA datasets
+

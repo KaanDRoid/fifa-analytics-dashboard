@@ -54,7 +54,7 @@ fifa_dash/
 ```
 
 ### Data Pipeline
-1. **Data Loading**: CSV files with FIFA player statistics
+1. **Data Loading**: CSV files with FIFA player statistics from [FIFA 23 Complete Player Dataset](https://www.kaggle.com/datasets/stefanoleone992/fifa-23-complete-player-dataset)
 2. **Data Cleaning**: Handle missing values, outliers, data types
 3. **Feature Engineering**: Create derived metrics and categories
 4. **Analysis**: Statistical analysis and ML modeling

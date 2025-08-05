@@ -1,8 +1,8 @@
-# FIFA Analytics Dashboard 📊⚽
+# FIFA Analytics Dashboard
 
 A modern, interactive FIFA player analytics dashboard built with Python, inspired by [FifaDash](https://github.com/EkremBayar/FifaDash). This project demonstrates how to create advanced football analytics using Python's powerful data science ecosystem with enhanced features and machine learning capabilities.
 
-## 🌟 Features
+## Features
 
 ### Core Analytics
 - **Interactive Player Statistics**: Comprehensive player performance metrics
@@ -22,7 +22,7 @@ A modern, interactive FIFA player analytics dashboard built with Python, inspire
 - **User-friendly Navigation**: Intuitive dashboard layout
 - **Mobile-responsive**: Works seamlessly across devices
 
-## 🚀 Technology Stack
+## Technology Stack
 
 - **Data Processing**: `pandas`, `numpy`
 - **Visualization**: `plotly`, `matplotlib`, `seaborn`
@@ -30,16 +30,16 @@ A modern, interactive FIFA player analytics dashboard built with Python, inspire
 - **Machine Learning**: `scikit-learn`
 - **Statistical Analysis**: `scipy`, `statsmodels`
 
-## 📊 Data Structure
+## Data Structure
 
-The dashboard supports both male and female player data with comprehensive attributes:
+The dashboard supports both male and female player data with comprehensive attributes based on the [FIFA 23 Complete Player Dataset](https://www.kaggle.com/datasets/stefanoleone992/fifa-23-complete-player-dataset):
 - Player demographics and physical attributes
 - Technical skills (pace, shooting, passing, dribbling, defending, physic)
 - Detailed skill breakdowns (70+ attributes)
 - Club and national team information
 - Market values and contract details
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -71,7 +71,7 @@ The dashboard supports both male and female player data with comprehensive attri
 
 5. **Open your browser** and navigate to `http://localhost:8501`
 
-## 📱 Usage
+## Usage
 
 ### Dashboard Navigation
 1. **Home**: Overview and key statistics
@@ -86,7 +86,7 @@ The dashboard supports both male and female player data with comprehensive attri
 - **Interactive Charts**: Click and explore data dynamically
 - **Export Data**: Download filtered data and visualizations
 
-## 🤖 Machine Learning Features
+## Machine Learning Features
 
 ### Player Value Prediction
 - Predicts market value based on player attributes
@@ -103,7 +103,7 @@ The dashboard supports both male and female player data with comprehensive attri
 - Identifies over/underperforming players
 - Provides development recommendations
 
-## 📈 Sample Visualizations
+## Sample Visualizations
 
 The dashboard includes various chart types:
 - **Radar Charts**: Player skill comparison
@@ -112,7 +112,7 @@ The dashboard includes various chart types:
 - **Time Series**: Career progression tracking
 - **Geographic Maps**: Player distribution by country
 
-## 🎯 Project Inspiration
+## Project Inspiration
 
 This project was inspired by the excellent work on [FifaDash](https://github.com/EkremBayar/FifaDash) by EkremBayar. While the original was built with R Shiny, this Python implementation adds:
 
@@ -122,7 +122,7 @@ This project was inspired by the excellent work on [FifaDash](https://github.com
 - Improved performance and scalability
 - Additional visualization types
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - [ ] Real-time data integration via APIs
 - [ ] Advanced ML models (neural networks, XGBoost)
@@ -131,7 +131,7 @@ This project was inspired by the excellent work on [FifaDash](https://github.com
 - [ ] Social sentiment analysis integration
 - [ ] Mobile app development
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
@@ -142,21 +142,21 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [EkremBayar](https://github.com/EkremBayar) for the original FifaDash inspiration
 - EA Sports for FIFA data
 - Streamlit community for excellent documentation
 - Python data science community
 
-## 📞 Contact
+## Contact
 
 For questions or suggestions, feel free to reach out or open an issue.
 
 ---
 
-**⭐ If you find this project helpful, please consider giving it a star!**
+**If you find this project helpful, please consider giving it a star!**
