@@ -58,7 +58,7 @@ def create_advanced_radar_chart(player_data, comparison_player=None):
         ),
         showlegend=True,
         title=dict(
-            text="Player Skills Comparison" if comparison_player else f"{player_data['long_name']} - Skills",
+            text="Player Skills Comparison" if comparison_player is not None else f"{player_data['long_name']} - Skills",
             x=0.5,
             font=dict(size=16)
         ),

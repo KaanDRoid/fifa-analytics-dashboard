@@ -3,9 +3,6 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-import seaborn as sns
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.ensemble import RandomForestRegressor
@@ -17,7 +14,6 @@ warnings.filterwarnings('ignore')
 # Page configuration
 st.set_page_config(
     page_title="FIFA Analytics Dashboard",
-    page_icon="⚽",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -140,7 +136,7 @@ def predict_player_value(df, player_features):
 
 def main():
     # Header
-    st.markdown('<div class="main-header">⚽ FIFA Analytics Dashboard</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">FIFA Analytics Dashboard</div>', unsafe_allow_html=True)
     
     # Load data
     df = load_data()
@@ -148,7 +144,7 @@ def main():
         st.stop()
     
     # Sidebar filters
-    st.sidebar.header("🔍 Filters")
+    st.sidebar.header("Filters")
     
     # Gender filter
     gender_options = ['All'] + list(df['gender'].unique())
@@ -194,7 +190,7 @@ def main():
     ]
     
     # Main dashboard tabs
-    tab1, tab2, tab3, tab4 = st.tabs(["📊 Overview", "👤 Player Analysis", "🔍 Comparison", "🤖 ML Insights"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Player Analysis", "Comparison", "ML Insights"])
     
     with tab1:
         # Key metrics
@@ -237,7 +233,7 @@ def main():
                 position_value = filtered_df.groupby('player_positions')['value_eur'].mean().head(10)
                 fig = px.bar(x=position_value.index, y=position_value.values,
                            title="Average Value by Position")
-                fig.update_xaxis(tickangle=45)
+                fig.update_xaxes(tickangle=45)
                 st.plotly_chart(fig, use_container_width=True)
     
     with tab2:
@@ -255,7 +251,9 @@ def main():
                 col1, col2, col3 = st.columns([1, 2, 1])
                 
                 with col1:
-                    st.image(player_data['player_face_url'], width=150)
+                    face_url = player_data.get('player_face_url')
+                    if pd.notna(face_url):
+                        st.image(face_url, width=150)
                 
                 with col2:
                     st.subheader(player_data['long_name'])
@@ -271,8 +269,8 @@ def main():
                     st.write(f"**Height:** {player_data['height_cm']} cm")
                     st.write(f"**Weight:** {player_data['weight_kg']} kg")
                     st.write(f"**Preferred Foot:** {player_data['preferred_foot']}")
-                    st.write(f"**Weak Foot:** {player_data['weak_foot']} ⭐")
-                    st.write(f"**Skill Moves:** {player_data['skill_moves']} ⭐")
+                    st.write(f"**Weak Foot:** {player_data['weak_foot']}/5")
+                    st.write(f"**Skill Moves:** {player_data['skill_moves']}/5")
                 
                 # Radar chart
                 player_skills = get_player_skills(filtered_df, player_data['player_id'])
@@ -348,7 +346,7 @@ def main():
                 
                 # Perform clustering
                 n_clusters = st.slider("Number of Clusters", 2, 8, 4)
-                kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+                kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
                 clusters = kmeans.fit_predict(scaled_data)
                 
                 # Add cluster labels to dataframe
@@ -394,7 +392,7 @@ def main():
                     with col2:
                         st.metric("Predicted Value", f"€{predicted_value/1000000:.1f}M")
                     with col3:
-                        difference = abs(predicted_value - actual_value) / actual_value * 100
+                        difference = abs(predicted_value - actual_value) / max(actual_value, 1) * 100
                         st.metric("Difference", f"{difference:.1f}%")
                     
                     st.info(f"Model Performance: MAE = €{mae/1000000:.1f}M, R² = {r2:.3f}")
@@ -404,7 +402,7 @@ def main():
     
     # Footer
     st.markdown("---")
-    st.markdown("Built with ❤️ using Streamlit | Inspired by [FifaDash](https://github.com/EkremBayar/FifaDash)")
+    st.markdown("Built with Streamlit. Inspired by [FifaDash](https://github.com/EkremBayar/FifaDash)")
 
 if __name__ == "__main__":
     main()

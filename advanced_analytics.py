@@ -17,12 +17,11 @@ from utils.visualizations import (
 
 st.set_page_config(
     page_title="Advanced FIFA Analytics",
-    page_icon="🏆",
     layout="wide"
 )
 
 def main():
-    st.title("🏆 Advanced FIFA Analytics Dashboard")
+    st.title("Advanced FIFA Analytics Dashboard")
     
     # Load data
     @st.cache_data
@@ -45,7 +44,7 @@ def main():
         st.stop()
     
     # Sidebar
-    st.sidebar.header("🔧 Advanced Filters")
+    st.sidebar.header("Advanced Filters")
     
     # Analysis type
     analysis_type = st.sidebar.selectbox(
@@ -54,7 +53,7 @@ def main():
     )
     
     if analysis_type == "Player Insights":
-        st.header("🎯 Player Deep Dive Analysis")
+        st.header("Player Deep Dive Analysis")
         
         # Player selection
         player_name = st.selectbox("Select Player", df['long_name'].dropna().unique())
@@ -62,7 +61,7 @@ def main():
         if player_name:
             player_data = df[df['long_name'] == player_name].iloc[0]
             
-            # Generate comprehensive report
+            # Build the player report
             with st.spinner("Generating player report..."):
                 report = generate_player_report(df, player_data['player_id'])
             
@@ -86,17 +85,17 @@ def main():
                 st.metric("Performance Index", f"{report['ratings']['performance_index']:.1f}")
             
             # Advanced radar chart
-            st.subheader("📊 Skills Analysis")
+            st.subheader("Skills Analysis")
             radar_fig = create_advanced_radar_chart(player_data)
             st.plotly_chart(radar_fig, use_container_width=True)
             
             # Similar players
             if not report['similar_players'].empty:
-                st.subheader("👥 Similar Players")
+                st.subheader("Similar Players")
                 st.dataframe(report['similar_players'])
     
     elif analysis_type == "Market Analysis":
-        st.header("💰 Market Analysis")
+        st.header("Market Analysis")
         
         # Market trends
         analyzer = PlayerAnalyzer()
@@ -115,12 +114,12 @@ def main():
             st.plotly_chart(corr_fig, use_container_width=True)
         
         # Undervalued players
-        st.subheader("💎 Potentially Undervalued Players")
+        st.subheader("Potentially Undervalued Players")
         undervalued = analyzer.identify_undervalued_players(df)
         st.dataframe(undervalued)
     
     elif analysis_type == "Performance Prediction":
-        st.header("🔮 Performance Prediction")
+        st.header("Performance Prediction")
         
         # Train predictor
         predictor = PlayerValuePredictor()
@@ -138,12 +137,12 @@ def main():
             st.metric("Test Samples", metrics['test_size'])
         
         # Feature importance
-        st.subheader("📈 Feature Importance")
+        st.subheader("Feature Importance")
         importance_df = predictor.get_feature_importance()
         st.bar_chart(importance_df.set_index('feature')['importance'])
         
         # Make prediction for selected player
-        st.subheader("🎯 Player Value Prediction")
+        st.subheader("Player Value Prediction")
         selected_player = st.selectbox("Select Player for Prediction", df['long_name'].dropna().unique())
         
         if selected_player:
@@ -158,6 +157,10 @@ def main():
                 player_data['weak_foot'], player_data['skill_moves']
             ]
             
+            if pd.isna(features).any():
+                st.warning("This player is missing some of the model features (goalkeepers have no outfield ratings).")
+                st.stop()
+
             predicted_value = predictor.predict(features)
             actual_value = player_data['value_eur']
             
@@ -171,14 +174,14 @@ def main():
                 st.metric("Prediction Error", f"{difference:.1f}%")
     
     elif analysis_type == "League Comparison":
-        st.header("🏟️ League Analysis")
+        st.header("League Analysis")
         
         # League comparison charts
         league_fig = create_league_comparison_chart(df)
         st.plotly_chart(league_fig, use_container_width=True)
         
         # Position analysis
-        st.subheader("📍 Position Analysis")
+        st.subheader("Position Analysis")
         position_fig = create_position_analysis_chart(df)
         st.plotly_chart(position_fig, use_container_width=True)
 
