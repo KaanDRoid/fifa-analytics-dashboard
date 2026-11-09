@@ -73,7 +73,13 @@ config_local.py
 *.jpeg
 *.gif
 *.html
-test_*
+
+# Files written by demo.py and setup_and_usage.ipynb
+test_plot.png
+test_plotly.html
+run_*.bat
+launch_dashboard.ps1
+.cache/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
