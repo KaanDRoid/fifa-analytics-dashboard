@@ -34,9 +34,6 @@ st.markdown("""
         border-radius: 10px;
         border-left: 5px solid #1f77b4;
     }
-    .stSelectbox > div > div {
-        background-color: white;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -276,7 +273,7 @@ def main():
                 player_skills = get_player_skills(filtered_df, player_data['player_id'])
                 if player_skills:
                     fig = create_radar_chart(player_skills, selected_player)
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, use_container_width=True, key="player_radar")
         else:
             st.warning("No players found with the current filters.")
     
@@ -318,13 +315,13 @@ def main():
                     skills1 = get_player_skills(filtered_df, p1_data['player_id'])
                     if skills1:
                         fig1 = create_radar_chart(skills1, player1)
-                        st.plotly_chart(fig1, use_container_width=True)
+                        st.plotly_chart(fig1, use_container_width=True, key="compare_radar_1")
                 
                 with col2:
                     skills2 = get_player_skills(filtered_df, p2_data['player_id'])
                     if skills2:
                         fig2 = create_radar_chart(skills2, player2)
-                        st.plotly_chart(fig2, use_container_width=True)
+                        st.plotly_chart(fig2, use_container_width=True, key="compare_radar_2")
         else:
             st.warning("Need at least 2 players for comparison.")
     

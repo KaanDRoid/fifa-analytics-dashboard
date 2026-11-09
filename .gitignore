@@ -72,6 +72,7 @@ config_local.py
 *.jpg
 *.jpeg
 *.gif
+!docs/images/*.png
 *.html
 
 # Files written by demo.py and setup_and_usage.ipynb
