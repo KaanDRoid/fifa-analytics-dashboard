@@ -1,21 +1,17 @@
-# FIFA Analytics Dashboard Sample Data
+# Data
 
-This folder contains FIFA player data. Actual data files are not included in GitHub due to size constraints.
+Put the FIFA player CSVs in this folder. They are not tracked in git because of their size.
 
 ## Required Data Files
 
-The following CSV files are needed for the project to function:
+The apps read these files:
 
 - `male_players.csv` - Male player statistics
 - `female_players.csv` - Female player statistics
-- `male_teams.csv` - Male team information (optional)
-- `female_teams.csv` - Female team information (optional)
-- `male_coaches.csv` - Male coach information (optional)
-- `female_coaches.csv` - Female coach information (optional)
 
 ## Data Format
 
-CSV files should contain the following columns:
+The code uses the following columns:
 
 ### Required Columns
 - `player_id`: Unique player identifier
@@ -30,7 +26,7 @@ CSV files should contain the following columns:
 - `nationality_name`: Nationality
 - `league_name`: Current league
 
-### Optional Columns
+### Also used when present
 - `wage_eur`: Wage
 - `height_cm`: Height
 - `weight_kg`: Weight
@@ -38,10 +34,6 @@ CSV files should contain the following columns:
 - `weak_foot`: Weak foot rating
 - `skill_moves`: Skill moves rating
 
-## Data Sources
+## Source
 
-You can obtain data files from the following sources:
-- [FIFA 23 Complete Player Dataset](https://www.kaggle.com/datasets/stefanoleone992/fifa-23-complete-player-dataset) - Kaggle (Primary source used)
-- EA Sports FIFA databases
-- Other Kaggle FIFA datasets
-
+[FIFA 23 Complete Player Dataset](https://www.kaggle.com/datasets/stefanoleone992/fifa-23-complete-player-dataset) on Kaggle. The dataset also ships team and coach files, which the apps do not use.
