@@ -1,162 +1,102 @@
 # FIFA Analytics Dashboard
 
-A modern, interactive FIFA player analytics dashboard built with Python, inspired by [FifaDash](https://github.com/EkremBayar/FifaDash). This project demonstrates how to create advanced football analytics using Python's powerful data science ecosystem with enhanced features and machine learning capabilities.
+Streamlit dashboards for exploring FIFA 23 player ratings. You can filter players, look at
+single players and compare two of them, cluster players by their main attributes and fit a
+simple model that predicts market value from ratings. The idea comes from
+[FifaDash](https://github.com/EkremBayar/FifaDash) by EkremBayar, which was built in R Shiny.
+This version is in Python with Streamlit, Plotly and scikit-learn.
 
-## Features
+## Data
 
-### Core Analytics
-- **Interactive Player Statistics**: Comprehensive player performance metrics
-- **Advanced Visualizations**: Radar charts, heatmaps, and dynamic plots
-- **Multi-dimensional Filtering**: Filter by position, league, age, nationality, and more
-- **Comparative Analysis**: Side-by-side player comparisons
+[FIFA 23 Complete Player Dataset](https://www.kaggle.com/datasets/stefanoleone992/fifa-23-complete-player-dataset) on Kaggle.
 
-### Enhanced Features
-- **Machine Learning Predictions**: Player value estimation and potential growth forecasting
-- **Clustering Analysis**: Player similarity analysis using K-means clustering
-- **Performance Insights**: Advanced metrics and performance indicators
-- **Real-time Data Processing**: Efficient data handling for large datasets
+The CSVs are too large for the repository. Download them and put these two files in `data/`:
 
-### Modern UI/UX
-- **Responsive Design**: Clean, modern interface built with Streamlit
-- **Interactive Elements**: Dynamic charts with Plotly
-- **User-friendly Navigation**: Intuitive dashboard layout
-- **Mobile-responsive**: Works seamlessly across devices
+- `data/male_players.csv`
+- `data/female_players.csv`
 
-## Technology Stack
+The apps add a `gender` column and concatenate them. See [data/README.md](data/README.md) for the columns the code uses.
 
-- **Data Processing**: `pandas`, `numpy`
-- **Visualization**: `plotly`, `matplotlib`, `seaborn`
-- **Web Framework**: `streamlit`
-- **Machine Learning**: `scikit-learn`
-- **Statistical Analysis**: `scipy`, `statsmodels`
+## Apps
 
-## Data Structure
+There are three independent Streamlit apps.
 
-The dashboard supports both male and female player data with comprehensive attributes based on the [FIFA 23 Complete Player Dataset](https://www.kaggle.com/datasets/stefanoleone992/fifa-23-complete-player-dataset):
-- Player demographics and physical attributes
-- Technical skills (pace, shooting, passing, dribbling, defending, physic)
-- Detailed skill breakdowns (70+ attributes)
-- Club and national team information
-- Market values and contract details
+**`app.py`** - main dashboard
 
-## Installation & Setup
+- Sidebar filters: gender, position, league, age range, overall rating range
+- Overview: player count, averages, rating histogram, top leagues, age vs. overall scatter
+- Player view: basic info and a radar chart of pace / shooting / passing / dribbling / defending / physic
+- Comparison: table and radar charts for two players
+- ML tab: K-means clustering (2-8 clusters, standardized features) and a random forest value model
 
-### Prerequisites
-- Python 3.8 or higher
-- Git
+**`advanced_analytics.py`**
 
-### Quick Start
+- Player report: position-weighted performance index and the five most similar players (cosine similarity on the main ratings)
+- Market analysis: value vs. overall scatter, correlation heatmap, and "undervalued" players (value per overall point below 80% of the median)
+- Value prediction: weighted average of a random forest (0.6) and a gradient boosting model (0.4) on 13 features, with R², MAE and feature importance
+- League comparison: player count, average rating, value and age for the 10 largest leagues, plus the same by position
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/KaanDRoid/fifa-analytics-dashboard.git
-   cd fifa-analytics-dashboard
-   ```
+**`tactical_analysis.py`**
 
-2. **Set up virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+- K-means clustering (3-10 clusters) with a 2D PCA plot; clusters get a rule-based label such as "Playmakers" or "Defensive Anchors"
+- Best players per position for a 4-3-3 or 4-4-2
+- Team builder: pick 11 players and see their averages and total value
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+## Method notes
 
-4. **Run the dashboard**
-   ```bash
-   streamlit run app.py
-   ```
+- Value models: rows with missing features are dropped, values of €200M or more are treated as outliers, 80/20 train/test split with `random_state=42`.
+- The main app retrains its random forest on the full dataset whenever a prediction is requested, so it takes a moment.
+- Goalkeepers have no outfield ratings in this dataset, so they are skipped by the similarity search and the advanced value prediction.
 
-5. **Open your browser** and navigate to `http://localhost:8501`
+## Results
 
-## Usage
+The repository does not store any model outputs. R² and MAE are computed live in the apps and depend on the data files and filters used.
 
-### Dashboard Navigation
-1. **Home**: Overview and key statistics
-2. **Player Explorer**: Detailed player analysis and comparison
-3. **Team Analytics**: Club and national team insights
-4. **Market Analysis**: Transfer values and market trends
-5. **ML Predictions**: Machine learning-powered insights
+## How to run
 
-### Key Features
-- **Search Players**: Find players by name, position, or club
-- **Filter & Compare**: Advanced filtering options and side-by-side comparisons
-- **Interactive Charts**: Click and explore data dynamically
-- **Export Data**: Download filtered data and visualizations
+```bash
+git clone https://github.com/KaanDRoid/fifa-analytics-dashboard.git
+cd fifa-analytics-dashboard
+python -m venv venv
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # macOS/Linux
+pip install -r requirements.txt
+```
 
-## Machine Learning Features
+Check that the packages and data files are in place:
 
-### Player Value Prediction
-- Predicts market value based on player attributes
-- Uses ensemble methods for improved accuracy
-- Provides confidence intervals for predictions
+```bash
+python demo.py
+```
 
-### Player Clustering
-- Groups similar players using K-means clustering
-- Identifies playing styles and tactical roles
-- Suggests transfer targets and alternatives
+Start the apps from the repository root (the paths to `data/` are relative):
 
-### Performance Analysis
-- Calculates advanced performance metrics
-- Identifies over/underperforming players
-- Provides development recommendations
+```bash
+streamlit run app.py
+streamlit run advanced_analytics.py --server.port 8502
+streamlit run tactical_analysis.py --server.port 8503
+```
 
-## Sample Visualizations
+`setup_and_usage.ipynb` has the same setup steps as a notebook, plus small helpers for checking ports, data columns and memory use.
 
-The dashboard includes various chart types:
-- **Radar Charts**: Player skill comparison
-- **Scatter Plots**: Attribute relationships
-- **Heatmaps**: League and position analysis
-- **Time Series**: Career progression tracking
-- **Geographic Maps**: Player distribution by country
+## Repository layout
 
-## Project Inspiration
-
-This project was inspired by the excellent work on [FifaDash](https://github.com/EkremBayar/FifaDash) by EkremBayar. While the original was built with R Shiny, this Python implementation adds:
-
-- Enhanced machine learning capabilities
-- Modern web interface with Streamlit
-- Advanced statistical analysis
-- Improved performance and scalability
-- Additional visualization types
-
-## Future Enhancements
-
-- [ ] Real-time data integration via APIs
-- [ ] Advanced ML models (neural networks, XGBoost)
-- [ ] Player career trajectory prediction
-- [ ] Team formation optimization
-- [ ] Social sentiment analysis integration
-- [ ] Mobile app development
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-### Development Setup
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+```
+app.py                  main dashboard
+advanced_analytics.py   player reports, market analysis, value model
+tactical_analysis.py    clustering, formations, team builder
+demo.py                 checks packages, loads the data and prints basic stats
+config.py               constants (ports, model settings); not imported by the apps yet
+utils/
+  analytics.py          value predictor, performance index, similarity, market helpers
+  visualizations.py     Plotly chart functions
+data/README.md          expected data files and columns
+setup_and_usage.ipynb   setup notes and helper code
+.streamlit/config.toml  Streamlit theme and server settings
+requirements.txt
+LICENSE
+```
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [EkremBayar](https://github.com/EkremBayar) for the original FifaDash inspiration
-- EA Sports for FIFA data
-- Streamlit community for excellent documentation
-- Python data science community
-
-## Contact
-
-For questions or suggestions, feel free to reach out or open an issue.
-
----
-
-**If you find this project helpful, please consider giving it a star!**
+MIT, see [LICENSE](LICENSE).

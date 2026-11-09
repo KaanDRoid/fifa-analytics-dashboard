@@ -51,9 +51,6 @@ class PlayerClusterAnalyzer:
             # Calculate average stats
             avg_stats = cluster_players[self.cluster_features].mean()
             
-            # Determine playing style based on highest attributes
-            sorted_attributes = avg_stats.sort_values(ascending=False)
-            
             # Determine cluster name based on dominant attributes
             if avg_stats['defending'] > 70 and avg_stats['pace'] < 60:
                 cluster_name = "Defensive Anchors"
@@ -66,7 +63,7 @@ class PlayerClusterAnalyzer:
             elif avg_stats['defending'] > 60 and avg_stats['passing'] > 70:
                 cluster_name = "Box-to-Box"
             else:
-                cluster_name = f"Balanced Players"
+                cluster_name = "Balanced Players"
             
             cluster_info = {
                 'cluster_id': cluster_id,
@@ -193,9 +190,9 @@ def create_team_chemistry_analysis(df, selected_players):
     return team_stats
 
 def main():
-    st.set_page_config(page_title="Tactical Analysis", page_icon="⚽", layout="wide")
+    st.set_page_config(page_title="Tactical Analysis", layout="wide")
     
-    st.title("⚽ FIFA Tactical Analysis Dashboard")
+    st.title("FIFA Tactical Analysis Dashboard")
     
     # Load data
     @st.cache_data
@@ -218,14 +215,14 @@ def main():
         st.stop()
     
     # Sidebar
-    st.sidebar.header("⚙️ Analysis Options")
+    st.sidebar.header("Analysis Options")
     analysis_mode = st.sidebar.selectbox(
         "Select Analysis Mode",
         ["Player Clustering", "Formation Analysis", "Team Builder"]
     )
     
     if analysis_mode == "Player Clustering":
-        st.header("🎯 Player Clustering Analysis")
+        st.header("Player Clustering Analysis")
         
         # Clustering parameters
         col1, col2 = st.columns(2)
@@ -247,16 +244,16 @@ def main():
             cluster_chars = analyzer.get_cluster_characteristics(clustered_df)
         
         # Display cluster visualization
-        st.subheader("📊 Cluster Visualization")
+        st.subheader("Cluster Visualization")
         cluster_viz = analyzer.create_cluster_visualization(clustered_df)
         st.plotly_chart(cluster_viz, use_container_width=True)
         
         # Display cluster characteristics
-        st.subheader("📋 Cluster Characteristics")
+        st.subheader("Cluster Characteristics")
         st.dataframe(cluster_chars)
         
         # Detailed cluster analysis
-        st.subheader("🔍 Detailed Cluster Analysis")
+        st.subheader("Detailed Cluster Analysis")
         selected_cluster = st.selectbox("Select Cluster for Details", cluster_chars['cluster_id'].tolist())
         
         cluster_players = clustered_df[clustered_df['cluster'] == selected_cluster]
@@ -274,7 +271,7 @@ def main():
         st.dataframe(top_cluster_players)
     
     elif analysis_mode == "Formation Analysis":
-        st.header("📐 Formation Analysis")
+        st.header("Formation Analysis")
         
         # Formation selection
         formation = st.selectbox("Select Formation", ["4-3-3", "4-4-2"])
@@ -292,7 +289,7 @@ def main():
                 st.write("---")
     
     elif analysis_mode == "Team Builder":
-        st.header("🏗️ Team Builder")
+        st.header("Team Builder")
         
         # Player selection for team building
         st.subheader("Select Your Team (11 Players)")
@@ -309,7 +306,7 @@ def main():
             team_stats = create_team_chemistry_analysis(df, selected_players)
             
             if team_stats:
-                st.subheader("📊 Team Analysis")
+                st.subheader("Team Analysis")
                 
                 col1, col2, col3, col4 = st.columns(4)
                 
@@ -330,7 +327,7 @@ def main():
                     st.metric("Average Defending", f"{team_stats['avg_defending']:.1f}")
                 
                 # Team roster
-                st.subheader("👥 Team Roster")
+                st.subheader("Team Roster")
                 team_df = df[df['long_name'].isin(selected_players)][
                     ['long_name', 'club_name', 'player_positions', 'age', 'overall', 'value_eur']
                 ]

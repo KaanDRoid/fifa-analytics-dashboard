@@ -25,7 +25,7 @@ MIN_OVERALL_RATING = 60
 
 # UI Settings
 SIDEBAR_WIDTH = 300
-MAIN_TITLE = "⚽ FIFA Analytics Dashboard"
+MAIN_TITLE = "FIFA Analytics Dashboard"
 THEME_COLOR = "#1f77b4"
 
 # Feature Flags

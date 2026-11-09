@@ -4,7 +4,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error
-import joblib
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -112,7 +111,7 @@ class PlayerAnalyzer:
     
     @staticmethod
     def calculate_performance_index(player_data):
-        """Calculate a comprehensive performance index"""
+        """Position-weighted average of the main ratings"""
         # Weight different attributes based on position
         position = player_data.get('player_positions', '')
         
@@ -184,6 +183,9 @@ class PlayerAnalyzer:
             return pd.DataFrame()
         
         target_features = target_player[feature_cols].values
+        if np.isnan(target_features.astype(float)).any():
+            # Goalkeepers have no outfield ratings, so there is nothing to compare
+            return pd.DataFrame()
         
         # Get all players' features
         all_features = df[feature_cols].dropna()
@@ -241,7 +243,7 @@ class PlayerAnalyzer:
         return undervalued[['long_name', 'club_name', 'overall', 'value_eur', 'value_per_overall']].head(20)
 
 def generate_player_report(df, player_id):
-    """Generate a comprehensive player report"""
+    """Collect basic info, ratings, market data and similar players for one player"""
     player_data = df[df['player_id'] == player_id].iloc[0]
     analyzer = PlayerAnalyzer()
     
